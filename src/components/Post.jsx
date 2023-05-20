@@ -1,12 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./Post.module.css";
+import { MdOutlineCancel } from "react-icons/md";
 
 function Post(props) {
+  const deletePostHandler = () => {
+    props.onDeletePost(props.index);
+  };
+
   return (
-    <li className={styles.post}>
-      <p className={styles.author}>{props.author}</p>
-      <p className={styles.text}>{props.body}</p>
-    </li>
+    <>
+      <li className={styles.post}>
+        <p className={styles.author}>{props.author}</p>
+        <button className={styles.button} onClick={deletePostHandler}>
+          <MdOutlineCancel />
+        </button>
+        <p className={styles.text}>{props.body}</p>
+      </li>
+    </>
   );
 }
 

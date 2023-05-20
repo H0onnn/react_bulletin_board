@@ -11,6 +11,10 @@ function PostList({ isPosting, onStopPosting }) {
     setPosts((prevPosts) => [postData, ...prevPosts]);
   };
 
+  const deletePostHandler = (index) => {
+    setPosts((prevPosts) => prevPosts.filter((post, i) => i !== index));
+  };
+
   return (
     <>
       {/* modalIsVisible의 값이 true일 때 모달창 출력 */}
@@ -22,7 +26,13 @@ function PostList({ isPosting, onStopPosting }) {
       {posts.length > 0 && (
         <ul className={styles.posts}>
           {posts.map((post, index) => (
-            <Post key={index} author={post.author} body={post.body} />
+            <Post
+              key={index}
+              index={index}
+              onDeletePost={deletePostHandler}
+              author={post.author}
+              body={post.body}
+            />
           ))}
         </ul>
       )}
