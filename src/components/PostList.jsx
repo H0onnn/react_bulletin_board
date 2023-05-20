@@ -5,46 +5,33 @@ import NewPost from "./NewPost";
 import Modal from "./Modal";
 
 function PostList({ isPosting, onStopPosting }) {
-  const [enteredBody, setEnteredBody] = useState("Please enter the text");
-  const [enteredAuthor, setEnteredAuthor] = useState("Your name");
+  const [posts, setPosts] = useState([]);
 
-  const bodyChangeHandler = (e) => {
-    setEnteredBody(e.target.value);
+  const addPostHandler = (postData) => {
+    setPosts((prevPosts) => [postData, ...prevPosts]);
   };
-
-  const nameChangeHandler = (e) => {
-    setEnteredAuthor(e.target.value);
-  };
-
-  //   let modalContent;
-
-  //   if (modalIsVisible) {
-  //     modalContent = (
-  //       <Modal onClose={hideModalHandler}>
-  //         <NewPost
-  //           onBodyChange={bodyChangeHandler}
-  //           onNameChange={nameChangeHandler}
-  //         />
-  //       </Modal>
-  //     );
-  //   }
 
   return (
     <>
       {/* modalIsVisible의 값이 true일 때 모달창 출력 */}
       {isPosting && (
         <Modal onClose={onStopPosting}>
-          <NewPost
-            onBodyChange={bodyChangeHandler}
-            onNameChange={nameChangeHandler}
-            onCancel={onStopPosting}
-          />
+          <NewPost onCancel={onStopPosting} onAddPost={addPostHandler} />
         </Modal>
       )}
-      <ul className={styles.posts}>
-        <Post author={enteredAuthor} body={enteredBody} />
-        <Post author="SE" />
-      </ul>
+      {posts.length > 0 && (
+        <ul className={styles.posts}>
+          {posts.map((post, index) => (
+            <Post key={index} author={post.author} body={post.body} />
+          ))}
+        </ul>
+      )}
+      {posts.length === 0 && (
+        <div style={{ textAlign: "center", color: "#fff" }}>
+          <h2>There are no posts yet.</h2>
+          <p>Be the first one to post!</p>
+        </div>
+      )}
     </>
   );
 }
