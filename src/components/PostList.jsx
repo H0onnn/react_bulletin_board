@@ -37,6 +37,7 @@ function PostList({ isPosting, onStopPosting }) {
           <NewPost
             onBodyChange={bodyChangeHandler}
             onNameChange={nameChangeHandler}
+            onCancel={onStopPosting}
           />
         </Modal>
       )}
