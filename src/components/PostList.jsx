@@ -1,35 +1,39 @@
-import { useState } from "react";
+import { useLoaderData } from "react-router-dom";
 import Post from "./Post";
 import styles from "./PostList.module.css";
-import NewPost from "./NewPost";
-import Modal from "./Modal";
 
-function PostList({ isPosting, onStopPosting }) {
-  const [posts, setPosts] = useState([]);
+function PostList() {
+  const posts = useLoaderData();
 
-  const addPostHandler = (postData) => {
-    setPosts((prevPosts) => [postData, ...prevPosts]);
-  };
+  // const addPostHandler = async (postData) => {
+  //   await fetch("http://localhost:8080/posts", {
+  //     method: "POST",
+  //     body: JSON.stringify(postData),
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //   });
 
-  const deletePostHandler = (index) => {
-    setPosts((prevPosts) => prevPosts.filter((post, i) => i !== index));
-  };
+  //   setPosts((prevPosts) => [postData, ...prevPosts]);
+  // };
+
+  // const deletePostHandler = async (id) => {
+  //   await fetch(`http://localhost:8080/posts/${id}`, {
+  //     method: "DELETE",
+  //   });
+
+  //   setPosts((prevPosts) => prevPosts.filter((post) => post.id !== id));
+  // };
 
   return (
     <>
-      {/* modalIsVisible의 값이 true일 때 모달창 출력 */}
-      {isPosting && (
-        <Modal onClose={onStopPosting}>
-          <NewPost onCancel={onStopPosting} onAddPost={addPostHandler} />
-        </Modal>
-      )}
       {posts.length > 0 && (
         <ul className={styles.posts}>
-          {posts.map((post, index) => (
+          {posts.map((post) => (
             <Post
-              key={index}
-              index={index}
-              onDeletePost={deletePostHandler}
+              key={post.id}
+              index={post.id}
+              // onDeletePost={deletePostHandler}
               author={post.author}
               body={post.body}
             />

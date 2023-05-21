@@ -4,7 +4,7 @@ import { MdOutlineCancel } from "react-icons/md";
 
 function Post(props) {
   const deletePostHandler = () => {
-    props.onDeletePost(props.index);
+    props.onDeletePost(props.id);
   };
 
   return (
