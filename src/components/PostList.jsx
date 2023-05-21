@@ -5,18 +5,6 @@ import styles from "./PostList.module.css";
 function PostList() {
   const posts = useLoaderData();
 
-  // const addPostHandler = async (postData) => {
-  //   await fetch("http://localhost:8080/posts", {
-  //     method: "POST",
-  //     body: JSON.stringify(postData),
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //   });
-
-  //   setPosts((prevPosts) => [postData, ...prevPosts]);
-  // };
-
   // const deletePostHandler = async (id) => {
   //   await fetch(`http://localhost:8080/posts/${id}`, {
   //     method: "DELETE",

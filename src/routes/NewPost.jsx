@@ -1,39 +1,18 @@
 import classes from "./NewPost.module.css";
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Form, redirect } from "react-router-dom";
 import Modal from "../components/Modal";
 
-function NewPost({ onAddPost }) {
-  const [enteredBody, setEnteredBody] = useState("Please enter the text");
-  const [enteredAuthor, setEnteredAuthor] = useState("Your name");
-
-  const bodyChangeHandler = (e) => {
-    setEnteredBody(e.target.value);
-  };
-
-  const nameChangeHandler = (e) => {
-    setEnteredAuthor(e.target.value);
-  };
-
-  const submitHandler = (e) => {
-    e.preventDefault();
-    const postData = {
-      body: enteredBody,
-      author: enteredAuthor,
-    };
-    onAddPost(postData);
-  };
-
+function NewPost() {
   return (
     <Modal>
-      <form className={classes.form} onSubmit={submitHandler}>
+      <Form method="post" className={classes.form}>
         <p>
           <label htmlFor="body">Text</label>
-          <textarea id="body" required rows={3} onChange={bodyChangeHandler} />
+          <textarea id="body" name="body" required rows={3} />
         </p>
         <p>
           <label htmlFor="name">Your name</label>
-          <input type="text" id="name" required onChange={nameChangeHandler} />
+          <input type="text" id="name" name="author" required />
         </p>
         <p className={classes.actions}>
           {/* form의 button 타입을 button으로 지정할 경우 폼이 제출되는걸 방지함*/}
@@ -42,9 +21,23 @@ function NewPost({ onAddPost }) {
           </Link>
           <button>Submit</button>
         </p>
-      </form>
+      </Form>
     </Modal>
   );
 }
 
 export default NewPost;
+
+export async function action({ request }) {
+  const formData = await request.formData();
+  const postData = Object.fromEntries(formData);
+  await fetch("http://localhost:8080/posts", {
+    method: "POST",
+    body: JSON.stringify(postData),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  return redirect("/");
+}
