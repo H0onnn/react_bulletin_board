@@ -20,6 +20,7 @@ function PostList() {
           {posts.map((post) => (
             <Post
               key={post.id}
+              id={post.id}
               index={post.id}
               // onDeletePost={deletePostHandler}
               author={post.author}

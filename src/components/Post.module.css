@@ -8,6 +8,10 @@
   position: relative;
 }
 
+.post a {
+  text-decoration: none;
+}
+
 .author {
   display: inline-block;
   font-size: 0.8rem;
